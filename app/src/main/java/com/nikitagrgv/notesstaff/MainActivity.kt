@@ -70,7 +70,7 @@ fun MusicStaffCanvas() {
             )
         }
 
-        val notePositions = listOf(0, 2, 4, 6)
+        val notePositions = listOf(0, 2, 4, 5, 6)
 
         notePositions.forEachIndexed { index, pos ->
             val xOffset = 200f + (index * 120f)
