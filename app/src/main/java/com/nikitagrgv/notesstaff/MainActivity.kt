@@ -74,6 +74,7 @@ fun Content(modifier: Modifier = Modifier) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.6f), onClick = {
                 notePositions = notePositions.drop(1)
+                notePositions += (-4..12).random()
                 renderer.jumpNextNote()
             }) {
             Text(lastPressedNote)
