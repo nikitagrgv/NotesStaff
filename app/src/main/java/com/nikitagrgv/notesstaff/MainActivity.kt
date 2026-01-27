@@ -44,8 +44,8 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
-    val minNotePosition = -6
-    val maxNotePosition = 8 + 6
+    val minNotePosition = -4
+    val maxNotePosition = 8 + 4
 
     while (notePositions.count() < 8) {
         notePositions += (-minNotePosition..maxNotePosition).random()
@@ -97,6 +97,17 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.9f)
         )
+        Button(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(8.dp)
+                .fillMaxWidth(0.5f), onClick = {
+                notePositions = notePositions.drop(1)
+                notePositions += (-minNotePosition..maxNotePosition).random()
+                renderer.jumpNextNote()
+            }) {
+            Text(text = "Skip")
+        }
     }
 }
 
