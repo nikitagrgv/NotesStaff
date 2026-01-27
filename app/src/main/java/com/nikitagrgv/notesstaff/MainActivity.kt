@@ -44,8 +44,8 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
-    val minNotePosition = -4
-    val maxNotePosition = 8 + 4
+    val minNotePosition = -6
+    val maxNotePosition = 8 + 6
 
     while (notePositions.count() < 8) {
         notePositions += (minNotePosition..maxNotePosition).random()
