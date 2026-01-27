@@ -1,5 +1,6 @@
 package com.nikitagrgv.notesstaff
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -134,6 +135,14 @@ class StaffRenderer(
 @Preview(showBackground = true)
 @Composable
 fun ContentPreview() {
+    NotesStaffTheme {
+        Content("Android")
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun ContentPreviewBlack() {
     NotesStaffTheme {
         Content("Android")
     }
