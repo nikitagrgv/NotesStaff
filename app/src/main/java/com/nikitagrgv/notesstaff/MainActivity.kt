@@ -44,18 +44,21 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Content(modifier: Modifier = Modifier) {
     var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
+    var lastPressedNote by remember { mutableStateOf("") }
 
     Column(modifier = modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas(notePositions)
         Button(
-            modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
+            modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(0.6f), onClick = {
                 val newNote = (-4..12).random()
                 notePositions = notePositions + newNote
             }) {
-            Text("Some button")
+            Text(lastPressedNote)
         }
-        PianoKeyboard { }
+        PianoKeyboard { note ->
+
+        }
     }
 }
 
