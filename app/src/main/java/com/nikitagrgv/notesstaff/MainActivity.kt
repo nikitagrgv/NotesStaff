@@ -17,6 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitagrgv.notesstaff.ui.theme.NotesStaffTheme
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
@@ -25,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +38,7 @@ class MainActivity : ComponentActivity() {
             NotesStaffTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Content(
-                        name = "Android",
-                        modifier = Modifier
+                        name = "Android", modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                     )
@@ -49,11 +52,16 @@ class MainActivity : ComponentActivity() {
 fun Content(name: String, modifier: Modifier = Modifier) {
     Column(modifier = modifier.fillMaxSize()) {
         Text(
-            text = "Hello $name!",
-            modifier = Modifier.padding(16.dp)
+            text = "Hello $name!", modifier = Modifier.padding(16.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas()
+        Button(
+            modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
+
+            }) {
+            Text("Some button")
+        }
     }
 }
 
@@ -61,9 +69,12 @@ fun Content(name: String, modifier: Modifier = Modifier) {
 fun MusicStaffCanvas() {
     val renderer = remember { StaffRenderer() }
 
-    Canvas(modifier = Modifier.fillMaxSize()) {
-        with(renderer)
-        {
+    Canvas(
+        modifier = Modifier
+            .height(200.dp)
+            .fillMaxWidth()
+    ) {
+        with(renderer) {
             drawStaffLines()
             val notePositions = listOf(0, 11, -4, 5, 6, -1, 10)
             notePositions.forEachIndexed { index, pos ->
@@ -76,7 +87,7 @@ fun MusicStaffCanvas() {
 class StaffRenderer(
     var lineSpacing: Float = 40f,
     var horizontalOffset: Float = 50f,
-    var bottomY: Float = 100f,
+    var bottomY: Float = 200f,
 ) {
     fun DrawScope.drawStaffLines() {
         val startX = horizontalOffset
