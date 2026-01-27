@@ -79,6 +79,8 @@ fun Content(modifier: Modifier = Modifier) {
                     notePositions = notePositions.drop(1)
                     notePositions += (-minNotePosition..maxNotePosition).random()
                     renderer.jumpNextNote()
+                } else {
+                    numMistakes++;
                 }
             }
         }
