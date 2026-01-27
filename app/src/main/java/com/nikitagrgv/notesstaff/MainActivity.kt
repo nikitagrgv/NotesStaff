@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MusicStaff(
                         name = "Android",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.padding(innerPadding).fillMaxSize()
                     )
                 }
             }
