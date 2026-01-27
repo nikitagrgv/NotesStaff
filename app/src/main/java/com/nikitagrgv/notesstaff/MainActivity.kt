@@ -95,14 +95,19 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
-            BlackKey("C#", onClick = { onKeyClick("C#") })
-            BlackKey("D#", onClick = { onKeyClick("D#") })
-            BlackKey("F#", onClick = { onKeyClick("F#") })
-            BlackKey("G#", onClick = { onKeyClick("G#") })
-            BlackKey("A#", onClick = { onKeyClick("A#") })
+            Spacer(modifier = Modifier.weight(0.75f))
+            BlackKey("C#") { onKeyClick("C#") }
+            Spacer(modifier = Modifier.weight(0.5f))
+            BlackKey("D#") { onKeyClick("D#") }
+            Spacer(modifier = Modifier.weight(1.5f))
+            BlackKey("F#") { onKeyClick("F#") }
+            Spacer(modifier = Modifier.weight(0.5f))
+            BlackKey("G#") { onKeyClick("G#") }
+            Spacer(modifier = Modifier.weight(0.5f))
+            BlackKey("A#") { onKeyClick("A#") }
+            Spacer(modifier = Modifier.weight(0.75f))
         }
     }
 }
