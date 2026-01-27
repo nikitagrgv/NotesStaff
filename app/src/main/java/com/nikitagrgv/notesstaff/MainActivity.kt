@@ -62,7 +62,7 @@ fun Content(modifier: Modifier = Modifier) {
                 nextOffset = max(0f, nextOffset)
                 renderer.scrollOffset = nextOffset
                 previousTimeNanos = frameTimeNanos
-                lastPressedNote = noteToString(notePositions.first())
+                lastPressedNote = mainClefNoteToString(notePositions.first())
             }
         }
     }
