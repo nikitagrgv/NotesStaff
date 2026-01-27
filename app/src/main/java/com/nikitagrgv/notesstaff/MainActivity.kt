@@ -208,8 +208,24 @@ class StaffRenderer(
     fun DrawScope.drawNote(index: Int, pos: Int) {
         val xOffset = scrollOffset + 150f + (index * notesSpacing)
         val yOffset = bottomY + (pos * (lineSpacing / 2))
-        val height = 40f - 1f
+        val height = lineSpacing - 1f
         val width = 50f
+
+        if (pos < 0) {
+            for (i in 0 downTo pos step 2) {
+                if (i % 2 == 0 && i < 0) {
+                    val lineY = bottomY + (i * (lineSpacing / 2))
+                    drawLedgerLine(xOffset, lineY, width)
+                }
+            }
+        } else if (pos > 8) {
+            for (i in 10..pos step 2) {
+                if (i % 2 == 0) {
+                    val lineY = bottomY + (i * (lineSpacing / 2))
+                    drawLedgerLine(xOffset, lineY, width)
+                }
+            }
+        }
 
         drawOval(
             color = color,
@@ -226,6 +242,16 @@ class StaffRenderer(
             start = Offset(stemX, yOffset),
             end = Offset(stemX, yOffset + stemHeight),
             strokeWidth = 4f
+        )
+    }
+
+    private fun DrawScope.drawLedgerLine(noteX: Float, lineY: Float, noteWidth: Float) {
+        val padding = 10f
+        drawLine(
+            color = color,
+            start = Offset(noteX - padding, lineY),
+            end = Offset(noteX + noteWidth + padding, lineY),
+            strokeWidth = 3f
         )
     }
 }
