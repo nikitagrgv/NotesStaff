@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import kotlin.math.max
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +52,9 @@ fun Content(modifier: Modifier = Modifier) {
         while (true) {
             withFrameNanos { frameTimeNanos ->
                 val timeDeltaSeconds = (frameTimeNanos - previousTimeNanos) / 1_000_000_000f
-                renderer.scrollOffset += speedPxPerSecond * timeDeltaSeconds
+                var nextOffset = renderer.scrollOffset - speedPxPerSecond * timeDeltaSeconds
+                nextOffset = max(0f, nextOffset)
+                renderer.scrollOffset = nextOffset
                 previousTimeNanos = frameTimeNanos
             }
         }
