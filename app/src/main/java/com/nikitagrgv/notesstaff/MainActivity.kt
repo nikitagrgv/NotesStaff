@@ -93,7 +93,7 @@ fun absNoteToString(note: Int): String {
 }
 
 fun mainClefNoteToString(note: Int): String {
-    return absNoteToString(-note)
+    return absNoteToString(-note + 3)
 }
 
 @Composable
