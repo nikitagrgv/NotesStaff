@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Content(modifier: Modifier = Modifier) {
     var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
-    var lastPressedNote by remember { mutableStateOf("None pressed") }
+    var lastPressedNote by remember { mutableStateOf("None Pressed") }
 
     Column(modifier = modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(20.dp))
