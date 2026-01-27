@@ -74,7 +74,7 @@ fun Content(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun MusicStaffCanvas(notePositions: List<Int>) {
     val color = MaterialTheme.colorScheme.onBackground
-    val renderer = remember { StaffRenderer(color = color) }
+    val renderer = remember(color) { StaffRenderer(color = color) }
 
     Canvas(
         modifier = Modifier
