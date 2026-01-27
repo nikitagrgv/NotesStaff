@@ -42,6 +42,8 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier) {
     var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
     var lastPressedNote by remember { mutableStateOf("None Pressed") }
+    val minNotePosition = -4
+    val maxNotePosition = 12
 
     val color = MaterialTheme.colorScheme.onBackground
     val renderer = remember(color) {
@@ -75,7 +77,7 @@ fun Content(modifier: Modifier = Modifier) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.6f), onClick = {
                 notePositions = notePositions.drop(1)
-                notePositions += (-4..12).random()
+                notePositions += (-minNotePosition..maxNotePosition).random()
                 renderer.jumpNextNote()
             }) {
             Text(lastPressedNote + notePositions.first().toString())
