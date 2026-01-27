@@ -56,15 +56,16 @@ fun Content(name: String, modifier: Modifier = Modifier) {
 fun MusicStaffCanvas() {
     Canvas(modifier = Modifier.fillMaxSize()) {
         val lineSpacing = 40f
-        val startX = 50f
-        val endX = size.width - 50f
+        val horizontalOffset = 50f
+        val startX = horizontalOffset
+        val endX = size.width - horizontalOffset
         val topStaffY = 100f
 
         for (i in 0..4) {
             val y = topStaffY + (i * lineSpacing)
             drawLine(
                 color = Color.Black,
-                start = Offset(startX, y),
+                start = Offset(horizontalOffset, y),
                 end = Offset(endX, y),
                 strokeWidth = 3f
             )
@@ -97,6 +98,10 @@ fun MusicStaffCanvas() {
         }
     }
 }
+
+class StaffRenderer(
+    var lineSpacing: Float = 40f
+)
 
 @Preview(showBackground = true)
 @Composable
