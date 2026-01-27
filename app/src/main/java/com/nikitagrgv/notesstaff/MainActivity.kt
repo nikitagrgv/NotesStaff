@@ -71,7 +71,7 @@ fun MusicStaffCanvas() {
 
     Canvas(
         modifier = Modifier
-            .height(200.dp)
+            .height(300.dp)
             .fillMaxWidth()
     ) {
         with(renderer) {
