@@ -44,9 +44,11 @@ fun Content(modifier: Modifier = Modifier) {
     var lastPressedNote by remember { mutableStateOf("None Pressed") }
 
     val color = MaterialTheme.colorScheme.onBackground
-    val renderer = remember(color) { StaffRenderer(color = color).apply {
-        scrollOffset = 500f
-    } }
+    val renderer = remember(color) {
+        StaffRenderer(color = color).apply {
+            scrollOffset = 500f
+        }
+    }
 
     LaunchedEffect(Unit) {
         val speedPxPerSecond = 100f
@@ -69,8 +71,7 @@ fun Content(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.6f), onClick = {
-                val newNote = (-4..12).random()
-                notePositions = notePositions + newNote
+                notePositions = notePositions.drop(1)
             }) {
             Text(lastPressedNote)
         }
