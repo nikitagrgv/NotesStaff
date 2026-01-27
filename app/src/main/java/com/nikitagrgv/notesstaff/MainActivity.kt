@@ -50,7 +50,9 @@ fun Content(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas(notePositions)
         Button(
-            modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(0.6f), onClick = {
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth(0.6f), onClick = {
                 val newNote = (-4..12).random()
                 notePositions = notePositions + newNote
             }) {
