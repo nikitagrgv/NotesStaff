@@ -103,7 +103,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 .padding(8.dp)
                 .fillMaxWidth(0.5f), onClick = {
                 notePositions = notePositions.drop(1)
-                notePositions += (-minNotePosition..maxNotePosition).random()
+                notePositions += (minNotePosition..maxNotePosition).random()
                 renderer.jumpNextNote()
             }) {
             Text(text = "Skip")
