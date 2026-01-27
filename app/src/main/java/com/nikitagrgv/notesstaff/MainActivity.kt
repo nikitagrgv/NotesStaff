@@ -94,17 +94,17 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
-            Spacer(modifier = Modifier.weight(0.75f))
+            Spacer(modifier = Modifier.weight(1f))
             BlackKey("C#") { onKeyClick("C#") }
-            Spacer(modifier = Modifier.weight(0.5f))
+            Spacer(modifier = Modifier.weight(1f))
             BlackKey("D#") { onKeyClick("D#") }
-            Spacer(modifier = Modifier.weight(1.5f))
+            Spacer(modifier = Modifier.weight(2f))
             BlackKey("F#") { onKeyClick("F#") }
-            Spacer(modifier = Modifier.weight(0.5f))
+            Spacer(modifier = Modifier.weight(1f))
             BlackKey("G#") { onKeyClick("G#") }
-            Spacer(modifier = Modifier.weight(0.5f))
+            Spacer(modifier = Modifier.weight(1f))
             BlackKey("A#") { onKeyClick("A#") }
-            Spacer(modifier = Modifier.weight(0.75f))
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
@@ -199,6 +199,14 @@ class StaffRenderer(
 @Preview(showBackground = true)
 @Composable
 fun ContentPreview() {
+    NotesStaffTheme {
+        Content()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 1000)
+@Composable
+fun ContentPreviewWide() {
     NotesStaffTheme {
         Content()
     }
