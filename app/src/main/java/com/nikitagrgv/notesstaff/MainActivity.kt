@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.nikitagrgv.notesstaff.ui.theme.NotesStaffTheme
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
@@ -66,6 +67,32 @@ fun MusicStaffCanvas() {
                 start = Offset(startX, y),
                 end = Offset(endX, y),
                 strokeWidth = 3f
+            )
+        }
+
+        val notePositions = listOf(0, 2, 4, 6)
+
+        notePositions.forEachIndexed { index, pos ->
+            val xOffset = 200f + (index * 120f)
+            val yOffset = topStaffY + (pos * (lineSpacing / 2))
+
+            // Draw Note Head
+            drawOval(
+                color = Color.Black,
+                topLeft = Offset(xOffset, yOffset - 15f),
+                size = Size(40f, 30f)
+            )
+
+            // Draw Stem (logic: if note is low, stem goes up; if high, stem goes down)
+            val stemUp = pos > 4
+            val stemX = if (stemUp) xOffset + 38f else xOffset + 2f
+            val stemHeight = if (stemUp) -100f else 100f
+
+            drawLine(
+                color = Color.Black,
+                start = Offset(stemX, yOffset),
+                end = Offset(stemX, yOffset + stemHeight),
+                strokeWidth = 4f
             )
         }
     }
