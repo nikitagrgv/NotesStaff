@@ -18,6 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitagrgv.notesstaff.ui.theme.NotesStaffTheme
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -68,7 +75,64 @@ fun Content(name: String, modifier: Modifier = Modifier) {
             }) {
             Text("Some button")
         }
+        PianoKeyboard { }
     }
+}
+
+@Composable
+fun PianoKeyboard(onKeyClick: (String) -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(240.dp)
+            .padding(10.dp)
+    ) {
+        Row(modifier = Modifier.fillMaxSize()) {
+            val whiteKeys = listOf("C", "D", "E", "F", "G", "A", "B")
+            whiteKeys.forEach { note ->
+                WhiteKey(note, onClick = { onKeyClick(note) })
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 32.dp)
+        ) {
+            BlackKey("C#", onClick = { onKeyClick("C#") })
+            BlackKey("D#", onClick = { onKeyClick("D#") })
+            Spacer(modifier = Modifier.width(48.dp))
+            BlackKey("F#", onClick = { onKeyClick("F#") })
+            BlackKey("G#", onClick = { onKeyClick("G#") })
+            BlackKey("A#", onClick = { onKeyClick("A#") })
+        }
+    }
+}
+
+@Composable
+fun RowScope.WhiteKey(note: String, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .border(1.dp, Color.Black)
+            .background(Color.White)
+            .clickable { onClick() },
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Text(note, color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
+    }
+}
+
+@Composable
+fun BlackKey(note: String, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .width(32.dp)
+            .fillMaxHeight(0.6f)
+            .background(Color.Black)
+            .clickable { onClick() }
+            .padding(horizontal = 2.dp))
 }
 
 @Composable
@@ -103,10 +167,7 @@ class StaffRenderer(
         for (i in 0..4) {
             val y = bottomY + (i * lineSpacing)
             drawLine(
-                color = color,
-                start = Offset(startX, y),
-                end = Offset(endX, y),
-                strokeWidth = 3f
+                color = color, start = Offset(startX, y), end = Offset(endX, y), strokeWidth = 3f
             )
         }
     }
