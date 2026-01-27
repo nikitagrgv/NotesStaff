@@ -76,14 +76,12 @@ fun MusicStaffCanvas() {
             val xOffset = 200f + (index * 120f)
             val yOffset = topStaffY + (pos * (lineSpacing / 2))
 
-            // Draw Note Head
             drawOval(
                 color = Color.Black,
                 topLeft = Offset(xOffset, yOffset - 15f),
                 size = Size(40f, 30f)
             )
 
-            // Draw Stem (logic: if note is low, stem goes up; if high, stem goes down)
             val stemUp = pos > 4
             val stemX = if (stemUp) xOffset + 38f else xOffset + 2f
             val stemHeight = if (stemUp) -100f else 100f
