@@ -78,7 +78,7 @@ fun Content(modifier: Modifier = Modifier) {
                 notePositions += (-4..12).random()
                 renderer.jumpNextNote()
             }) {
-            Text(lastPressedNote)
+            Text(lastPressedNote + notePositions.first().toString())
         }
         PianoKeyboard { note ->
             lastPressedNote = note
@@ -93,7 +93,7 @@ fun absNoteToString(note: Int): String {
 }
 
 fun mainClefNoteToString(note: Int): String {
-    return absNoteToString(note + 4)
+    return absNoteToString(-note)
 }
 
 @Composable
