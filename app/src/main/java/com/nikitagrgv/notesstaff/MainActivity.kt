@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -94,17 +95,17 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1.5f))
             BlackKey("C#") { onKeyClick("C#") }
             Spacer(modifier = Modifier.weight(1f))
             BlackKey("D#") { onKeyClick("D#") }
-            Spacer(modifier = Modifier.weight(2f))
+            Spacer(modifier = Modifier.weight(3f))
             BlackKey("F#") { onKeyClick("F#") }
             Spacer(modifier = Modifier.weight(1f))
             BlackKey("G#") { onKeyClick("G#") }
             Spacer(modifier = Modifier.weight(1f))
             BlackKey("A#") { onKeyClick("A#") }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1.5f))
         }
     }
 }
@@ -125,10 +126,10 @@ fun RowScope.WhiteKey(note: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun BlackKey(note: String, onClick: () -> Unit) {
+fun RowScope.BlackKey(note: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .width(32.dp)
+            .weight(1f)
             .fillMaxHeight(0.6f)
             .background(Color.Black)
             .clickable { onClick() })
