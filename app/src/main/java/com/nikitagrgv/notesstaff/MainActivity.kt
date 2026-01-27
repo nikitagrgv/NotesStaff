@@ -62,19 +62,11 @@ fun MusicStaffCanvas() {
     val renderer = remember { StaffRenderer() }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
-        val lineSpacing = 40f
-        val horizontalOffset = 50f
-        val bottomY = 100f
-
         with(renderer)
         {
             drawStaffLines()
-        }
-
-        val notePositions = listOf(0, 11, -4, 5, 6, -1, 10)
-
-        notePositions.forEachIndexed { index, pos ->
-            with(renderer) {
+            val notePositions = listOf(0, 11, -4, 5, 6, -1, 10)
+            notePositions.forEachIndexed { index, pos ->
                 drawNote(index, pos)
             }
         }
