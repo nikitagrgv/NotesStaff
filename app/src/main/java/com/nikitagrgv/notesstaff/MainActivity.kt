@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Content(name: String, modifier: Modifier = Modifier) {
-    var notePositions by remember { mutableStateOf(listOf(0, 11, -4, 5, 6, -1, 10)) }
+    var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
 
     Column(modifier = modifier.fillMaxSize()) {
         Text(
