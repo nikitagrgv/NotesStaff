@@ -82,7 +82,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 val str = mainClefNoteToString(notePositions.first())
                 if (note == str) {
                     notePositions = notePositions.drop(1)
-                    notePositions += (-minNotePosition..maxNotePosition).random()
+                    notePositions += (minNotePosition..maxNotePosition).random()
                     renderer.jumpNextNote()
                 } else {
                     numMistakes++;
