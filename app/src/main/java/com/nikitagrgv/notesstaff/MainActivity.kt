@@ -75,16 +75,17 @@ fun MusicStaffCanvas() {
         notePositions.forEachIndexed { index, pos ->
             val xOffset = 200f + (index * 120f)
             val yOffset = topStaffY + (pos * (lineSpacing / 2))
-            val size = 40f - 1f
+            val height = 40f - 1f
+            val width = 50f
 
             drawOval(
                 color = Color.Black,
-                topLeft = Offset(xOffset, yOffset - size / 2),
-                size = Size(40f, size)
+                topLeft = Offset(xOffset, yOffset - height / 2),
+                size = Size(width, height)
             )
 
             val stemUp = pos > 4
-            val stemX = if (stemUp) xOffset + 38f else xOffset + 2f
+            val stemX = if (stemUp) xOffset + width - 2 else xOffset + 2f
             val stemHeight = if (stemUp) -100f else 100f
 
             drawLine(
