@@ -101,7 +101,6 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
         ) {
             BlackKey("C#", onClick = { onKeyClick("C#") })
             BlackKey("D#", onClick = { onKeyClick("D#") })
-            Spacer(modifier = Modifier.width(48.dp))
             BlackKey("F#", onClick = { onKeyClick("F#") })
             BlackKey("G#", onClick = { onKeyClick("G#") })
             BlackKey("A#", onClick = { onKeyClick("A#") })
@@ -131,8 +130,7 @@ fun BlackKey(note: String, onClick: () -> Unit) {
             .width(32.dp)
             .fillMaxHeight(0.6f)
             .background(Color.Black)
-            .clickable { onClick() }
-            .padding(horizontal = 2.dp))
+            .clickable { onClick() })
 }
 
 @Composable
