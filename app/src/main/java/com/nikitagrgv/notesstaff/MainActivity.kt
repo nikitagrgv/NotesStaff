@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Content(modifier: Modifier = Modifier) {
     var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
-    var lastPressedNote by remember { mutableStateOf("None Pressed") }
     val minNotePosition = -4
     val maxNotePosition = 12
 
@@ -64,7 +63,6 @@ fun Content(modifier: Modifier = Modifier) {
                 nextOffset = max(0f, nextOffset)
                 renderer.scrollOffset = nextOffset
                 previousTimeNanos = frameTimeNanos
-                lastPressedNote = mainClefNoteToString(notePositions.first())
             }
         }
     }
@@ -72,18 +70,15 @@ fun Content(modifier: Modifier = Modifier) {
     Column(modifier = modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas(notePositions, renderer)
-        Button(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth(0.6f), onClick = {
-                notePositions = notePositions.drop(1)
-                notePositions += (-minNotePosition..maxNotePosition).random()
-                renderer.jumpNextNote()
-            }) {
-            Text(lastPressedNote + notePositions.first().toString())
-        }
         PianoKeyboard { note ->
-            lastPressedNote = note
+            if (!notePositions.isEmpty()) {
+                val str = mainClefNoteToString(notePositions.first())
+                if (note == str) {
+                    notePositions = notePositions.drop(1)
+                    notePositions += (-minNotePosition..maxNotePosition).random()
+                    renderer.jumpNextNote()
+                }
+            }
         }
     }
 }
