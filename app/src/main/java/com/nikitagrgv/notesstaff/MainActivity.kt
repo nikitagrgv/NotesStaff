@@ -72,6 +72,7 @@ fun Content(modifier: Modifier = Modifier) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.6f), onClick = {
                 notePositions = notePositions.drop(1)
+                renderer.jumpNextNote()
             }) {
             Text(lastPressedNote)
         }
@@ -174,6 +175,10 @@ class StaffRenderer(
                 color = color, start = Offset(startX, y), end = Offset(endX, y), strokeWidth = 3f
             )
         }
+    }
+
+    fun jumpNextNote() {
+        horizontalOffset += notesSpacing
     }
 
     fun DrawScope.drawNote(index: Int, pos: Int) {
