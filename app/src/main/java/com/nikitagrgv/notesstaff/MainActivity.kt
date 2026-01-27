@@ -74,27 +74,9 @@ fun MusicStaffCanvas() {
         val notePositions = listOf(0, 11, -4, 5, 6, -1, 10)
 
         notePositions.forEachIndexed { index, pos ->
-            val xOffset = 200f + (index * 120f)
-            val yOffset = bottomY + (pos * (lineSpacing / 2))
-            val height = 40f - 1f
-            val width = 50f
-
-            drawOval(
-                color = Color.Black,
-                topLeft = Offset(xOffset, yOffset - height / 2),
-                size = Size(width, height)
-            )
-
-            val stemUp = pos > 4
-            val stemX = if (stemUp) xOffset + width - 2 else xOffset + 2f
-            val stemHeight = if (stemUp) -100f else 100f
-
-            drawLine(
-                color = Color.Black,
-                start = Offset(stemX, yOffset),
-                end = Offset(stemX, yOffset + stemHeight),
-                strokeWidth = 4f
-            )
+            with(renderer) {
+                drawNote(index, pos)
+            }
         }
     }
 }
@@ -117,6 +99,30 @@ class StaffRenderer(
                 strokeWidth = 3f
             )
         }
+    }
+
+    fun DrawScope.drawNote(index: Int, pos: Int) {
+        val xOffset = 200f + (index * 120f)
+        val yOffset = bottomY + (pos * (lineSpacing / 2))
+        val height = 40f - 1f
+        val width = 50f
+
+        drawOval(
+            color = Color.Black,
+            topLeft = Offset(xOffset, yOffset - height / 2),
+            size = Size(width, height)
+        )
+
+        val stemUp = pos > 4
+        val stemX = if (stemUp) xOffset + width - 2 else xOffset + 2f
+        val stemHeight = if (stemUp) -100f else 100f
+
+        drawLine(
+            color = Color.Black,
+            start = Offset(stemX, yOffset),
+            end = Offset(stemX, yOffset + stemHeight),
+            strokeWidth = 4f
+        )
     }
 }
 
