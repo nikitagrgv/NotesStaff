@@ -73,7 +73,8 @@ fun Content(name: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun MusicStaffCanvas(notePositions: List<Int>) {
-    val renderer = remember { StaffRenderer() }
+    val color = MaterialTheme.colorScheme.onBackground
+    val renderer = remember { StaffRenderer(color = color) }
 
     Canvas(
         modifier = Modifier
@@ -93,6 +94,7 @@ class StaffRenderer(
     var lineSpacing: Float = 40f,
     var horizontalOffset: Float = 50f,
     var bottomY: Float = 200f,
+    var color: Color,
 ) {
     fun DrawScope.drawStaffLines() {
         val startX = horizontalOffset
@@ -101,7 +103,7 @@ class StaffRenderer(
         for (i in 0..4) {
             val y = bottomY + (i * lineSpacing)
             drawLine(
-                color = Color.Black,
+                color = color,
                 start = Offset(startX, y),
                 end = Offset(endX, y),
                 strokeWidth = 3f
@@ -116,7 +118,7 @@ class StaffRenderer(
         val width = 50f
 
         drawOval(
-            color = Color.Black,
+            color = color,
             topLeft = Offset(xOffset, yOffset - height / 2),
             size = Size(width, height)
         )
@@ -126,7 +128,7 @@ class StaffRenderer(
         val stemHeight = if (stemUp) -100f else 100f
 
         drawLine(
-            color = Color.Black,
+            color = color,
             start = Offset(stemX, yOffset),
             end = Offset(stemX, yOffset + stemHeight),
             strokeWidth = 4f
