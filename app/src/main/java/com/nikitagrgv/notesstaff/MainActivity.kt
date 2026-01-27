@@ -157,6 +157,7 @@ fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer) {
 
 class StaffRenderer(
     var lineSpacing: Float = 40f,
+    var notesSpacing: Float = 120f,
     var horizontalOffset: Float = 50f,
     var bottomY: Float = 200f,
     var color: Color,
@@ -176,7 +177,7 @@ class StaffRenderer(
     }
 
     fun DrawScope.drawNote(index: Int, pos: Int) {
-        val xOffset = scrollOffset + 200f + (index * 120f)
+        val xOffset = scrollOffset + 150f + (index * notesSpacing)
         val yOffset = bottomY + (pos * (lineSpacing / 2))
         val height = 40f - 1f
         val width = 50f
