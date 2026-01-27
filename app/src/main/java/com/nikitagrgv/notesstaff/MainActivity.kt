@@ -62,6 +62,7 @@ fun Content(modifier: Modifier = Modifier) {
                 nextOffset = max(0f, nextOffset)
                 renderer.scrollOffset = nextOffset
                 previousTimeNanos = frameTimeNanos
+                lastPressedNote = noteToString(notePositions.first())
             }
         }
     }
@@ -83,6 +84,16 @@ fun Content(modifier: Modifier = Modifier) {
             lastPressedNote = note
         }
     }
+}
+
+fun absNoteToString(note: Int): String {
+    val names = listOf("C", "D", "E", "F", "G", "A", "B")
+    val index = note.mod(7)
+    return names[index]
+}
+
+fun mainClefNoteToString(note: Int): String {
+    return absNoteToString(note + 3)
 }
 
 @Composable
