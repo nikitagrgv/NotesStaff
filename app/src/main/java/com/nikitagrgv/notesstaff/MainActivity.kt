@@ -51,7 +51,7 @@ fun Content(modifier: Modifier = Modifier) {
     }
 
     LaunchedEffect(Unit) {
-        val speedPxPerSecond = 100f
+        val speedPxPerSecond = 130f
         var previousTimeNanos = System.nanoTime()
         while (true) {
             withFrameNanos { frameTimeNanos ->
