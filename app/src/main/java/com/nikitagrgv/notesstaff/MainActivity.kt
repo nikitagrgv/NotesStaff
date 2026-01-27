@@ -44,7 +44,9 @@ fun Content(modifier: Modifier = Modifier) {
     var lastPressedNote by remember { mutableStateOf("None Pressed") }
 
     val color = MaterialTheme.colorScheme.onBackground
-    val renderer = remember(color) { StaffRenderer(color = color) }
+    val renderer = remember(color) { StaffRenderer(color = color).apply {
+        scrollOffset = 500f
+    } }
 
     LaunchedEffect(Unit) {
         val speedPxPerSecond = 100f
