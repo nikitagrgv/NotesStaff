@@ -59,7 +59,7 @@ fun Content(modifier: Modifier = Modifier) {
             Text(lastPressedNote)
         }
         PianoKeyboard { note ->
-
+            lastPressedNote = note
         }
     }
 }
