@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitagrgv.notesstaff.ui.theme.NotesStaffTheme
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Content(name: String, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxSize())
-    {
+    Column(modifier = modifier.fillMaxSize()) {
         Text(
             text = "Hello $name!",
             modifier = Modifier.padding(16.dp)
@@ -51,7 +53,22 @@ fun Content(name: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun MusicStaffCanvas() {
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val lineSpacing = 40f
+        val startX = 50f
+        val endX = size.width - 50f
+        val topStaffY = 100f
 
+        for (i in 0..4) {
+            val y = topStaffY + (i * lineSpacing)
+            drawLine(
+                color = Color.Black,
+                start = Offset(startX, y),
+                end = Offset(endX, y),
+                strokeWidth = 3f
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
