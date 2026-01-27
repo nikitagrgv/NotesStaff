@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import kotlin.math.max
 
 class MainActivity : ComponentActivity() {
@@ -44,7 +45,7 @@ fun Content(modifier: Modifier = Modifier) {
     var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
     var numMistakes by remember { mutableIntStateOf(0) }
     val minNotePosition = -4
-    val maxNotePosition = 12
+    val maxNotePosition = 8 + 4
 
     val color = MaterialTheme.colorScheme.onBackground
     val renderer = remember(color) {
@@ -87,6 +88,7 @@ fun Content(modifier: Modifier = Modifier) {
         Text(
             text = "Mistakes: $numMistakes",
             textAlign = TextAlign.Center,
+            fontSize = 24.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.9f)
