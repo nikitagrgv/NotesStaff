@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     Content(
                         modifier = Modifier
                             .padding(innerPadding)
-                            .fillMaxSize()
+                            .fillMaxSize(), notes = listOf()
                     )
                 }
             }
@@ -41,11 +41,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Content(modifier: Modifier = Modifier) {
-    var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
+fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
+    var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
     val minNotePosition = -4
     val maxNotePosition = 8 + 4
+
+    while (notePositions.count() < 8) {
+        notePositions += (-minNotePosition..maxNotePosition).random()
+    }
 
     val color = MaterialTheme.colorScheme.onBackground
     val renderer = remember(color) {
@@ -260,7 +264,7 @@ class StaffRenderer(
 @Composable
 fun ContentPreview() {
     NotesStaffTheme {
-        Content()
+        Content(notes = listOf(0, 11, -1, 10))
     }
 }
 
@@ -269,7 +273,7 @@ fun ContentPreview() {
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content()
+            Content(notes = listOf(0, 11, -1, 10))
         }
     }
 }
@@ -278,6 +282,6 @@ fun ContentPreviewBlack() {
 @Composable
 fun ContentPreviewWide() {
     NotesStaffTheme {
-        Content()
+        Content(notes = listOf(0, 11, -1, 10))
     }
 }
