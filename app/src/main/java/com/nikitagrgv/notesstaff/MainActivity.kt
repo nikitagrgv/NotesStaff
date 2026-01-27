@@ -48,7 +48,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     val maxNotePosition = 8 + 4
 
     while (notePositions.count() < 8) {
-        notePositions += (-minNotePosition..maxNotePosition).random()
+        notePositions += (minNotePosition..maxNotePosition).random()
     }
 
     val color = MaterialTheme.colorScheme.onBackground
