@@ -205,14 +205,6 @@ fun ContentPreview() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 1000)
-@Composable
-fun ContentPreviewWide() {
-    NotesStaffTheme {
-        Content()
-    }
-}
-
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ContentPreviewBlack() {
@@ -220,5 +212,13 @@ fun ContentPreviewBlack() {
         Surface(color = MaterialTheme.colorScheme.background) {
             Content()
         }
+    }
+}
+
+@Preview(showBackground = true, widthDp = 600)
+@Composable
+fun ContentPreviewWide() {
+    NotesStaffTheme {
+        Content()
     }
 }
