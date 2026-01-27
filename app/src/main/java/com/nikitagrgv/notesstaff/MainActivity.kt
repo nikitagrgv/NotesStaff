@@ -61,8 +61,7 @@ fun Content(name: String, modifier: Modifier = Modifier) {
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
                 val newNote = (-4..12).random()
-
-
+                notePositions = notePositions + newNote
             }) {
             Text("Some button")
         }
