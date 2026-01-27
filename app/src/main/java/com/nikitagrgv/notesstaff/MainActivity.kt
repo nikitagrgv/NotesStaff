@@ -51,12 +51,12 @@ fun Content(modifier: Modifier = Modifier) {
     }
 
     LaunchedEffect(Unit) {
-        val speedPxPerSecond = 350f
+        val speedPxPerSecond = 250
         var previousTimeNanos = System.nanoTime()
         while (true) {
             withFrameNanos { frameTimeNanos ->
                 val timeDeltaSeconds = (frameTimeNanos - previousTimeNanos) / 1_000_000_000f
-                val speedMultiplier = if (renderer.scrollOffset > 500) 10f else 1f
+                val speedMultiplier = if (renderer.scrollOffset > 500) 7f else 1f
                 val speed = speedPxPerSecond * speedMultiplier
                 var nextOffset = renderer.scrollOffset - timeDeltaSeconds * speed
                 nextOffset = max(0f, nextOffset)
