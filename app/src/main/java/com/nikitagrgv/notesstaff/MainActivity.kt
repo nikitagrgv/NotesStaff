@@ -56,7 +56,9 @@ fun Content(modifier: Modifier = Modifier) {
         while (true) {
             withFrameNanos { frameTimeNanos ->
                 val timeDeltaSeconds = (frameTimeNanos - previousTimeNanos) / 1_000_000_000f
-                var nextOffset = renderer.scrollOffset - speedPxPerSecond * timeDeltaSeconds
+                val speedMultiplier = if (renderer.scrollOffset > 600) 3f else 1f
+                val speed = speedPxPerSecond * speedMultiplier
+                var nextOffset = renderer.scrollOffset - timeDeltaSeconds * speed
                 nextOffset = max(0f, nextOffset)
                 renderer.scrollOffset = nextOffset
                 previousTimeNanos = frameTimeNanos
