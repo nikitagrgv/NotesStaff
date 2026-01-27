@@ -97,7 +97,6 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 32.dp)
         ) {
             BlackKey("C#", onClick = { onKeyClick("C#") })
             BlackKey("D#", onClick = { onKeyClick("D#") })
