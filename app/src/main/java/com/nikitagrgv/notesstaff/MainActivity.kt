@@ -158,7 +158,7 @@ class StaffRenderer(
     }
 
     fun DrawScope.drawNote(index: Int, pos: Int) {
-        val xOffset = 200f + (index * 120f)
+        val xOffset = scrollOffset + 200f + (index * 120f)
         val yOffset = bottomY + (pos * (lineSpacing / 2))
         val height = 40f - 1f
         val width = 50f
