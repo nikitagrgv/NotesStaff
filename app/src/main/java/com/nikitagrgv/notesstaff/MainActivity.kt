@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
             NotesStaffTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Content(
-                        name = "Android", modifier = Modifier
+                        modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                     )
@@ -59,13 +59,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Content(name: String, modifier: Modifier = Modifier) {
+fun Content(modifier: Modifier = Modifier) {
     var notePositions by remember { mutableStateOf(listOf(0, 11, -1, 10)) }
 
     Column(modifier = modifier.fillMaxSize()) {
-        Text(
-            text = "Hello $name!", modifier = Modifier.padding(16.dp)
-        )
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas(notePositions)
         Button(
@@ -203,7 +200,7 @@ class StaffRenderer(
 @Composable
 fun ContentPreview() {
     NotesStaffTheme {
-        Content("Android")
+        Content()
     }
 }
 
@@ -212,7 +209,7 @@ fun ContentPreview() {
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content("Android")
+            Content()
         }
     }
 }
