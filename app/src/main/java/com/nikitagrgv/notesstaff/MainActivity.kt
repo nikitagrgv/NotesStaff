@@ -178,7 +178,7 @@ class StaffRenderer(
     }
 
     fun jumpNextNote() {
-        horizontalOffset += notesSpacing
+        scrollOffset += notesSpacing
     }
 
     fun DrawScope.drawNote(index: Int, pos: Int) {
