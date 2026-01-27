@@ -21,6 +21,8 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
@@ -143,7 +145,9 @@ fun ContentPreview() {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ContentPreviewBlack() {
-    NotesStaffTheme {
-        Content("Android")
+    NotesStaffTheme(darkTheme = true) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Content("Android")
+        }
     }
 }
