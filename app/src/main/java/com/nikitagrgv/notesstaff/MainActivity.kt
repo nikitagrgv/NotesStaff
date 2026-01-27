@@ -260,11 +260,15 @@ class StaffRenderer(
     }
 }
 
+fun getTestNotes(): List<Int> {
+    return listOf(0, 11, -1, 10);
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ContentPreview() {
     NotesStaffTheme {
-        Content(notes = listOf(0, 11, -1, 10))
+        Content(notes = getTestNotes())
     }
 }
 
@@ -273,7 +277,7 @@ fun ContentPreview() {
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content(notes = listOf(0, 11, -1, 10))
+            Content(notes = getTestNotes())
         }
     }
 }
@@ -282,6 +286,6 @@ fun ContentPreviewBlack() {
 @Composable
 fun ContentPreviewWide() {
     NotesStaffTheme {
-        Content(notes = listOf(0, 11, -1, 10))
+        Content(notes = getTestNotes())
     }
 }
