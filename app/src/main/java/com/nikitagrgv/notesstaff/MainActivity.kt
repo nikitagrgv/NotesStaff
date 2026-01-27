@@ -261,7 +261,7 @@ class StaffRenderer(
 }
 
 fun getTestNotes(): List<Int> {
-    return listOf(0, 11, -1, 10);
+    return listOf(-6, -5, 10, 12);
 }
 
 @Preview(showBackground = true)
