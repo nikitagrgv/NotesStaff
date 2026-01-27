@@ -59,10 +59,10 @@ fun MusicStaffCanvas() {
         val horizontalOffset = 50f
         val startX = horizontalOffset
         val endX = size.width - horizontalOffset
-        val topStaffY = 100f
+        val endY = 100f
 
         for (i in 0..4) {
-            val y = topStaffY + (i * lineSpacing)
+            val y = endY + (i * lineSpacing)
             drawLine(
                 color = Color.Black,
                 start = Offset(startX, y),
@@ -75,7 +75,7 @@ fun MusicStaffCanvas() {
 
         notePositions.forEachIndexed { index, pos ->
             val xOffset = 200f + (index * 120f)
-            val yOffset = topStaffY + (pos * (lineSpacing / 2))
+            val yOffset = endY + (pos * (lineSpacing / 2))
             val height = 40f - 1f
             val width = 50f
 
