@@ -65,7 +65,7 @@ fun MusicStaffCanvas() {
             val y = topStaffY + (i * lineSpacing)
             drawLine(
                 color = Color.Black,
-                start = Offset(horizontalOffset, y),
+                start = Offset(startX, y),
                 end = Offset(endX, y),
                 strokeWidth = 3f
             )
