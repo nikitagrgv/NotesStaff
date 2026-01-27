@@ -50,14 +50,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Content(name: String, modifier: Modifier = Modifier) {
+    var notePositions by remember { mutableStateOf(listOf(0, 11, -4, 5, 6, -1, 10)) }
+
     Column(modifier = modifier.fillMaxSize()) {
         Text(
             text = "Hello $name!", modifier = Modifier.padding(16.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
-        MusicStaffCanvas()
+        MusicStaffCanvas(notePositions)
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
+                val newNote = (-4..12).random()
+
 
             }) {
             Text("Some button")
@@ -66,7 +70,7 @@ fun Content(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MusicStaffCanvas() {
+fun MusicStaffCanvas(notePositions: List<Int>) {
     val renderer = remember { StaffRenderer() }
 
     Canvas(
@@ -76,7 +80,6 @@ fun MusicStaffCanvas() {
     ) {
         with(renderer) {
             drawStaffLines()
-            val notePositions = listOf(0, 11, -4, 5, 6, -1, 10)
             notePositions.forEachIndexed { index, pos ->
                 drawNote(index, pos)
             }
