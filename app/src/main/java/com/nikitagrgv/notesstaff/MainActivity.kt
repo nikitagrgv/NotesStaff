@@ -40,7 +40,8 @@ class MainActivity : ComponentActivity() {
                             .padding(innerPadding)
                             .fillMaxSize(),
                         notes = listOf(),
-                        settingsOpened = false
+                        settingsOpened = false,
+                        isBassClef = false
                     )
                 }
             }
@@ -49,14 +50,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boolean) {
+fun Content(
+    modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boolean, isBassClef: Boolean
+) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
     var numCorrect by remember { mutableIntStateOf(0) }
     var numNotesToGenUp by remember { mutableIntStateOf(4) }
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
-    var isBassClef by remember { mutableStateOf(false) }
+    var isBassClef by remember { mutableStateOf(isBassClef) }
 
     var lastCorrectAnswerNanos by remember { mutableLongStateOf(System.nanoTime()) }
     var correctAnswersDeltaSum by remember { mutableLongStateOf(0) }
@@ -384,8 +387,8 @@ class StaffRenderer(
 
     fun DrawScope.drawClef(isBassClef: Boolean) {
         val clefChar = if (isBassClef) "\uD834\uDD22" else "\uD834\uDD1E"
-        val fontSize = lineSpacing * 4.5f
-        val yOffset = if (isBassClef) -lineSpacing * 0.5f else -lineSpacing * 1.2f
+        val fontSize = lineSpacing * 1.6f
+        val yOffset = if (isBassClef) -lineSpacing * 0.8f else -lineSpacing * 0.7f
         val textLayoutResult = textMeasurer.measure(
             text = clefChar, style = androidx.compose.ui.text.TextStyle(
                 fontSize = fontSize.sp, color = color
@@ -468,11 +471,15 @@ fun getTestNotes(): List<Int> {
     return listOf(-6, -5, 10, 14);
 }
 
+fun getTestIsBassClef(): Boolean {
+    return true;
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ContentPreview() {
     NotesStaffTheme {
-        Content(notes = getTestNotes(), settingsOpened = true)
+        Content(notes = getTestNotes(), settingsOpened = true, isBassClef = getTestIsBassClef())
     }
 }
 
@@ -481,7 +488,7 @@ fun ContentPreview() {
 fun ContentPreviewBlackSmall() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content(notes = getTestNotes(), settingsOpened = true)
+            Content(notes = getTestNotes(), settingsOpened = true, isBassClef = getTestIsBassClef())
         }
     }
 }
@@ -493,7 +500,7 @@ fun ContentPreviewBlackSmall() {
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content(notes = getTestNotes(), settingsOpened = true)
+            Content(notes = getTestNotes(), settingsOpened = true, isBassClef = getTestIsBassClef())
         }
     }
 }
@@ -502,6 +509,6 @@ fun ContentPreviewBlack() {
 @Composable
 fun ContentPreviewWide() {
     NotesStaffTheme {
-        Content(notes = getTestNotes(), settingsOpened = true)
+        Content(notes = getTestNotes(), settingsOpened = true, isBassClef = getTestIsBassClef())
     }
 }
