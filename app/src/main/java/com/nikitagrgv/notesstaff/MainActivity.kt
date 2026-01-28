@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
+    var numCorrect by remember { mutableIntStateOf(0) }
     var numNotesToGenUp by remember { mutableIntStateOf(4) }
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
@@ -94,11 +96,20 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                     notePositions = notePositions.drop(1)
                     addNewNotePosition()
                     renderer.jumpNextNote()
+                    numCorrect++;
                 } else {
                     numMistakes++;
                 }
             }
         }
+        Text(
+            text = "Correct: $numCorrect",
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth(0.9f)
+        )
         Text(
             text = "Mistakes: $numMistakes",
             textAlign = TextAlign.Center,
@@ -119,6 +130,21 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
             Text(text = "Skip")
         }
         Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
+            RangeControlRow(
+                label = "Upper Notes",
+                value = numNotesToGenUp,
+                min = -2,
+                max = 8,
+                onValueChange = { numNotesToGenUp = it })
+            RangeControlRow(
+                label = "Lower Notes",
+                value = numNotesToGenDown,
+                min = -2,
+                max = 8,
+                onValueChange = { numNotesToGenDown = it })
+
+            Spacer(modifier = Modifier.height(20.dp))
+
             Row(
                 modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
@@ -141,6 +167,48 @@ fun absNoteToString(note: Int): String {
 
 fun mainClefNoteToString(note: Int): String {
     return absNoteToString(-note + 3)
+}
+
+@Composable
+fun RangeControlRow(label: String, value: Int, min: Int, max: Int, onValueChange: (Int) -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = "$label: $value", modifier = Modifier.width(120.dp))
+        IntSlider(
+            value = value,
+            onValueChange = onValueChange,
+            min = min,
+            max = max,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+fun IntSlider(
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    min: Int,
+    max: Int,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    val steps = ((max - min) - 1).coerceAtLeast(0)
+
+    Slider(
+        value = value.toFloat(),
+        onValueChange = { newValue ->
+            onValueChange(newValue.roundToInt())
+        },
+        valueRange = min.toFloat()..max.toFloat(),
+        steps = steps,
+        modifier = modifier,
+        enabled = enabled
+    )
 }
 
 @Composable
@@ -207,7 +275,7 @@ fun RowScope.BlackKey(note: String, onClick: () -> Unit) {
 fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer) {
     Canvas(
         modifier = Modifier
-            .height(300.dp)
+            .height(240.dp)
             .fillMaxWidth()
     ) {
         with(renderer) {
