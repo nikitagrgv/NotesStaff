@@ -47,7 +47,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var numMistakes by remember { mutableIntStateOf(0) }
     var numNotesToGenUp by remember { mutableIntStateOf(4) }
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
-    var isShowNotes by remember { mutableStateOf(true) }
+    var isShowNotes by remember { mutableStateOf(false) }
 
     val minNotePosition = 0 - numNotesToGenUp
     val maxNotePosition = 8 + numNotesToGenDown
