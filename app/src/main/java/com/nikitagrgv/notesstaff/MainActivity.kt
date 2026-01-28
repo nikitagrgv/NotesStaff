@@ -169,7 +169,19 @@ fun Content(
         }
 
         Accordion(opened = settingsOpened) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 2.dp, vertical = 2.dp)
+            ) {
+                CheckBoxText(
+                    text = "Bass Clef", checked = isBassClef, onCheckedChange = { checked ->
+                        isBassClef = checked
+                    })
+                CheckBoxText(
+                    text = "Show Notes", checked = isShowNotes, onCheckedChange = { checked ->
+                        isShowNotes = checked
+                    })
                 RangeControlRow(
                     label = "Upper Notes",
                     value = numNotesToGenUp,
@@ -182,14 +194,6 @@ fun Content(
                     min = -2,
                     max = 8,
                     onValueChange = { numNotesToGenDown = it })
-                CheckBoxText(
-                    text = "Show Notes", checked = isShowNotes, onCheckedChange = { checked ->
-                        isShowNotes = checked
-                    })
-                CheckBoxText(
-                    text = "Bass Clef", checked = isBassClef, onCheckedChange = { checked ->
-                        isBassClef = checked
-                    })
             }
         }
     }
@@ -219,10 +223,11 @@ fun Accordion(
             .padding(8.dp)
             .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
     ) {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .clickable { expanded = !expanded }
-            .padding(12.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = !expanded }
+                .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
