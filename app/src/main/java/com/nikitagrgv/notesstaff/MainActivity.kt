@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nikitagrgv.notesstaff.ui.theme.NotesStaffTheme
 import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -46,6 +47,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var numMistakes by remember { mutableIntStateOf(0) }
     var numNotesToGenUp by remember { mutableIntStateOf(4) }
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
+    var isShowNotes by remember { mutableStateOf(true) }
 
     val minNotePosition = 0 - numNotesToGenUp
     val maxNotePosition = 8 + numNotesToGenDown
@@ -114,6 +116,18 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 renderer.jumpNextNote()
             }) {
             Text(text = "Skip")
+        }
+        Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
+            Row(
+                modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(checked = isShowNotes, onCheckedChange = { checked ->
+                    isShowNotes = checked
+                })
+                Text(
+                    text = "Show Notes"
+                )
+            }
         }
     }
 }
