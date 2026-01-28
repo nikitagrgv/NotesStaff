@@ -54,6 +54,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
     var numNotesToGenUp by remember { mutableIntStateOf(4) }
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
+    var isBassClef by remember { mutableStateOf(false) }
 
     var lastCorrectAnswerNanos by remember { mutableLongStateOf(System.nanoTime()) }
     var correctAnswersDeltaSum by remember { mutableLongStateOf(0) }
@@ -177,16 +178,23 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
                     onCheckedChange = { checked ->
                         isShowNotes = checked
                     })
+                CheckBoxText(
+                    text = "Bass Clef",
+                    checked = isBassClef,
+                    onCheckedChange = { checked ->
+                        isBassClef = checked
+                    })
             }
         }
     }
 }
 
 @Composable
-fun CheckBoxText(text: String, checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?
+fun CheckBoxText(
+    text: String, checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?
 ) {
     Row(
-        modifier=Modifier.height(40.dp), verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier.height(40.dp), verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(checked = checked, onCheckedChange = onCheckedChange)
         Text(text = text)
