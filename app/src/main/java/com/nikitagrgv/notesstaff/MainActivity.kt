@@ -52,6 +52,10 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
 
+    var lastCorrectAnswerNanos by remember { mutableLongStateOf(System.nanoTime()) }
+    var correctAnswersDeltaSum by remember { mutableLongStateOf(0) }
+    var meanDelta by remember { mutableFloatStateOf(0f) }
+
     val minNotePosition = 0 - numNotesToGenUp
     val maxNotePosition = 8 + numNotesToGenDown
 
@@ -112,6 +116,14 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
         )
         Text(
             text = "Mistakes: $numMistakes",
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth(0.9f)
+        )
+        Text(
+            text = "Mean Delta: ${"%.1f".format(meanDelta)} sec",
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             modifier = Modifier
