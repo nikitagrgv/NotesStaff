@@ -36,7 +36,9 @@ class MainActivity : ComponentActivity() {
                     Content(
                         modifier = Modifier
                             .padding(innerPadding)
-                            .fillMaxSize(), notes = listOf()
+                            .fillMaxSize(),
+                        notes = listOf(),
+                        settingsOpened = false
                     )
                 }
             }
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
+fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boolean) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
     var numCorrect by remember { mutableIntStateOf(0) }
@@ -159,15 +161,17 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
             numNotesUp = numNotesToGenUp,
             numNotesDown = numNotesToGenDown,
             onUpChange = {
-
+                numNotesToGenUp = it
             },
             onDownChange = {
-
+                numNotesToGenDown = it
             },
             isShowNotes = isShowNotes,
             onShowNotesChange = {
-
-            })
+                isShowNotes = it
+            },
+            opened = settingsOpened
+        )
 
         Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
             RangeControlRow(
@@ -203,9 +207,10 @@ fun ExpandableSettings(
     numNotesDown: Int,
     onDownChange: (Int) -> Unit,
     isShowNotes: Boolean,
-    onShowNotesChange: (Boolean) -> Unit
+    onShowNotesChange: (Boolean) -> Unit,
+    opened: Boolean
 ) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(opened) }
 
     Column(
         modifier = Modifier
@@ -473,7 +478,7 @@ fun getTestNotes(): List<Int> {
 @Composable
 fun ContentPreview() {
     NotesStaffTheme {
-        Content(notes = getTestNotes())
+        Content(notes = getTestNotes(), settingsOpened = true)
     }
 }
 
@@ -482,7 +487,7 @@ fun ContentPreview() {
 fun ContentPreviewBlackSmall() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content(notes = getTestNotes())
+            Content(notes = getTestNotes(), settingsOpened = true)
         }
     }
 }
@@ -494,7 +499,7 @@ fun ContentPreviewBlackSmall() {
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
         Surface(color = MaterialTheme.colorScheme.background) {
-            Content(notes = getTestNotes())
+            Content(notes = getTestNotes(), settingsOpened = true)
         }
     }
 }
@@ -503,6 +508,6 @@ fun ContentPreviewBlack() {
 @Composable
 fun ContentPreviewWide() {
     NotesStaffTheme {
-        Content(notes = getTestNotes())
+        Content(notes = getTestNotes(), settingsOpened = true)
     }
 }
