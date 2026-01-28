@@ -157,58 +157,39 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
             Text(text = "Skip")
         }
 
-        ExpandableSettings(
-            numNotesUp = numNotesToGenUp,
-            numNotesDown = numNotesToGenDown,
-            onUpChange = {
-                numNotesToGenUp = it
-            },
-            onDownChange = {
-                numNotesToGenDown = it
-            },
-            isShowNotes = isShowNotes,
-            onShowNotesChange = {
-                isShowNotes = it
-            },
-            opened = settingsOpened
-        )
-
-        Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
-            RangeControlRow(
-                label = "Upper Notes",
-                value = numNotesToGenUp,
-                min = -2,
-                max = 8,
-                onValueChange = { numNotesToGenUp = it })
-            RangeControlRow(
-                label = "Lower Notes",
-                value = numNotesToGenDown,
-                min = -2,
-                max = 8,
-                onValueChange = { numNotesToGenDown = it })
-            Row(
-                modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(checked = isShowNotes, onCheckedChange = { checked ->
-                    isShowNotes = checked
-                })
-                Text(
-                    text = "Show Notes"
-                )
+        Accordion(opened = settingsOpened) {
+            Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
+                RangeControlRow(
+                    label = "Upper Notes",
+                    value = numNotesToGenUp,
+                    min = -2,
+                    max = 8,
+                    onValueChange = { numNotesToGenUp = it })
+                RangeControlRow(
+                    label = "Lower Notes",
+                    value = numNotesToGenDown,
+                    min = -2,
+                    max = 8,
+                    onValueChange = { numNotesToGenDown = it })
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(checked = isShowNotes, onCheckedChange = { checked ->
+                        isShowNotes = checked
+                    })
+                    Text(
+                        text = "Show Notes"
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun ExpandableSettings(
-    numNotesUp: Int,
-    onUpChange: (Int) -> Unit,
-    numNotesDown: Int,
-    onDownChange: (Int) -> Unit,
-    isShowNotes: Boolean,
-    onShowNotesChange: (Boolean) -> Unit,
-    opened: Boolean
+fun Accordion(
+    opened: Boolean, content: @Composable () -> Unit
 ) {
     var expanded by rememberSaveable { mutableStateOf(opened) }
 
@@ -218,11 +199,10 @@ fun ExpandableSettings(
             .padding(8.dp)
             .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(12.dp),
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded }
+            .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
@@ -230,35 +210,7 @@ fun ExpandableSettings(
         }
 
         AnimatedVisibility(visible = expanded) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp)
-            ) {
-                RangeControlRow(
-                    label = "Upper Notes",
-                    value = numNotesUp,
-                    min = -2,
-                    max = 8,
-                    onValueChange = onUpChange
-                )
-                RangeControlRow(
-                    label = "Lower Notes",
-                    value = numNotesDown,
-                    min = -2,
-                    max = 8,
-                    onValueChange = onDownChange
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Checkbox(checked = isShowNotes, onCheckedChange = onShowNotesChange)
-                    Text(text = "Show Note Names")
-                }
-            }
+            content()
         }
     }
 }
