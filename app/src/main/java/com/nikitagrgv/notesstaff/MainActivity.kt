@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -90,7 +91,12 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
         }
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas(notePositions, renderer)
         PianoKeyboard(isShowNotes) { note ->
@@ -148,6 +154,21 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
             }) {
             Text(text = "Skip")
         }
+
+        ExpandableSettings(
+            numNotesUp = numNotesToGenUp,
+            numNotesDown = numNotesToGenDown,
+            onUpChange = {
+
+            },
+            onDownChange = {
+
+            },
+            isShowNotes = isShowNotes,
+            onShowNotesChange = {
+
+            })
+
         Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
             RangeControlRow(
                 label = "Upper Notes",
@@ -170,6 +191,67 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 Text(
                     text = "Show Notes"
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun ExpandableSettings(
+    numNotesUp: Int,
+    onUpChange: (Int) -> Unit,
+    numNotesDown: Int,
+    onDownChange: (Int) -> Unit,
+    isShowNotes: Boolean,
+    onShowNotesChange: (Boolean) -> Unit
+) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
+    ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded }
+            .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(text = "Practice Settings", style = MaterialTheme.typography.titleMedium)
+            Text(text = if (expanded) "▲" else "▼")
+        }
+
+        AnimatedVisibility(visible = expanded) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp)
+            ) {
+                RangeControlRow(
+                    label = "Upper Notes",
+                    value = numNotesUp,
+                    min = -2,
+                    max = 8,
+                    onValueChange = onUpChange
+                )
+                RangeControlRow(
+                    label = "Lower Notes",
+                    value = numNotesDown,
+                    min = -2,
+                    max = 8,
+                    onValueChange = onDownChange
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(checked = isShowNotes, onCheckedChange = onShowNotesChange)
+                    Text(text = "Show Note Names")
+                }
             }
         }
     }
@@ -199,7 +281,9 @@ fun RangeControlRow(label: String, value: Int, min: Int, max: Int, onValueChange
             onValueChange = onValueChange,
             min = min,
             max = max,
-            modifier = Modifier.weight(1f).height(36.dp)
+            modifier = Modifier
+                .weight(1f)
+                .height(36.dp)
         )
     }
 }
@@ -402,7 +486,9 @@ fun ContentPreviewBlackSmall() {
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 380, heightDp = 720)
+@Preview(
+    showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 380, heightDp = 720
+)
 @Composable
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
