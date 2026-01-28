@@ -63,6 +63,11 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
     val minNotePosition = 0 - numNotesToGenUp
     val maxNotePosition = 8 + numNotesToGenDown
 
+    fun clefNoteToString(note: Int): String {
+        val str = if (isBassClef) bassClefNoteToString(note) else mainClefNoteToString(note)
+        return str;
+    }
+
     fun addNewNotePosition() {
         notePositions += (minNotePosition..maxNotePosition).random()
     }
@@ -104,7 +109,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
         MusicStaffCanvas(notePositions, renderer)
         PianoKeyboard(isShowNotes) { note ->
             if (!notePositions.isEmpty()) {
-                val str = mainClefNoteToString(notePositions.first())
+                val str = clefNoteToString(notePositions.first())
                 if (note == str) {
                     notePositions = notePositions.drop(1)
                     addNewNotePosition()
@@ -173,15 +178,11 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
                     max = 8,
                     onValueChange = { numNotesToGenDown = it })
                 CheckBoxText(
-                    text = "Show Notes",
-                    checked = isShowNotes,
-                    onCheckedChange = { checked ->
+                    text = "Show Notes", checked = isShowNotes, onCheckedChange = { checked ->
                         isShowNotes = checked
                     })
                 CheckBoxText(
-                    text = "Bass Clef",
-                    checked = isBassClef,
-                    onCheckedChange = { checked ->
+                    text = "Bass Clef", checked = isBassClef, onCheckedChange = { checked ->
                         isBassClef = checked
                     })
             }
@@ -238,6 +239,10 @@ fun absNoteToString(note: Int): String {
 
 fun mainClefNoteToString(note: Int): String {
     return absNoteToString(-note + 3)
+}
+
+fun bassClefNoteToString(note: Int): String {
+    return mainClefNoteToString(note + 2)
 }
 
 @Composable
