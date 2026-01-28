@@ -281,7 +281,7 @@ fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer) {
         with(renderer) {
             drawStaffLines()
             notePositions.forEachIndexed { index, pos ->
-                val noteColor = if (index == 0) Color.Green else color
+                val noteColor = if (index == 0) Color.Red else color
                 drawNote(index, pos, noteColor)
             }
         }
