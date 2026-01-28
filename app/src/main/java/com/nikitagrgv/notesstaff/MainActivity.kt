@@ -47,8 +47,12 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     val minNotePosition = -4
     val maxNotePosition = 8 + 4
 
-    while (notePositions.count() < 8) {
+    fun addNewNotePosition() {
         notePositions += (minNotePosition..maxNotePosition).random()
+    }
+
+    while (notePositions.count() < 8) {
+        addNewNotePosition()
     }
 
     val color = MaterialTheme.colorScheme.onBackground
@@ -82,7 +86,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 val str = mainClefNoteToString(notePositions.first())
                 if (note == str) {
                     notePositions = notePositions.drop(1)
-                    notePositions += (minNotePosition..maxNotePosition).random()
+                    addNewNotePosition()
                     renderer.jumpNextNote()
                 } else {
                     numMistakes++;
@@ -103,7 +107,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 .padding(8.dp)
                 .fillMaxWidth(0.5f), onClick = {
                 notePositions = notePositions.drop(1)
-                notePositions += (minNotePosition..maxNotePosition).random()
+                addNewNotePosition()
                 renderer.jumpNextNote()
             }) {
             Text(text = "Skip")
