@@ -46,9 +46,9 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
-    var numNotesToGenUp by rememberSaveable { mutableIntStateOf(4) }
-    var numNotesToGenDown by rememberSaveable { mutableIntStateOf(4) }
-    var isShowNotes by rememberSaveable { mutableStateOf(false) }
+    var numNotesToGenUp by remember { mutableIntStateOf(4) }
+    var numNotesToGenDown by remember { mutableIntStateOf(4) }
+    var isShowNotes by remember { mutableStateOf(false) }
 
     val minNotePosition = 0 - numNotesToGenUp
     val maxNotePosition = 8 + numNotesToGenDown
