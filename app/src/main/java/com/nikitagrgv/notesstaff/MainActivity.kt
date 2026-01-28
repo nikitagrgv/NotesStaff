@@ -242,7 +242,7 @@ fun mainClefNoteToString(note: Int): String {
 }
 
 fun bassClefNoteToString(note: Int): String {
-    return mainClefNoteToString(note + 2)
+    return mainClefNoteToString(note - 2)
 }
 
 @Composable
