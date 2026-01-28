@@ -18,6 +18,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -45,9 +46,9 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     var notePositions by remember { mutableStateOf(notes) }
     var numMistakes by remember { mutableIntStateOf(0) }
-    var numNotesToGenUp by remember { mutableIntStateOf(4) }
-    var numNotesToGenDown by remember { mutableIntStateOf(4) }
-    var isShowNotes by remember { mutableStateOf(false) }
+    var numNotesToGenUp by rememberSaveable { mutableIntStateOf(4) }
+    var numNotesToGenDown by rememberSaveable { mutableIntStateOf(4) }
+    var isShowNotes by rememberSaveable { mutableStateOf(false) }
 
     val minNotePosition = 0 - numNotesToGenUp
     val maxNotePosition = 8 + numNotesToGenDown
