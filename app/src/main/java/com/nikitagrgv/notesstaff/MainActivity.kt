@@ -106,7 +106,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                     val delta = curTime - lastCorrectAnswerNanos
                     lastCorrectAnswerNanos = curTime
                     correctAnswersDeltaSum += delta
-                    meanDelta = (delta / numCorrect) / 1_000_000_000f
+                    meanDelta = (correctAnswersDeltaSum / numCorrect) / 1_000_000_000f
                 } else {
                     numMistakes++;
                 }
