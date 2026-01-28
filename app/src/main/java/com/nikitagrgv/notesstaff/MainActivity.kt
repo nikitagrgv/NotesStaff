@@ -183,13 +183,13 @@ fun Content(
                         isShowNotes = checked
                     })
                 RangeControlRow(
-                    label = "Upper Notes",
+                    label = "Upper",
                     value = numNotesToGenUp,
                     min = -2,
                     max = 8,
                     onValueChange = { numNotesToGenUp = it })
                 RangeControlRow(
-                    label = "Lower Notes",
+                    label = "Lower",
                     value = numNotesToGenDown,
                     min = -2,
                     max = 8,
