@@ -101,6 +101,12 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                     addNewNotePosition()
                     renderer.jumpNextNote()
                     numCorrect++;
+
+                    val curTime = System.nanoTime()
+                    val delta = curTime - lastCorrectAnswerNanos
+                    lastCorrectAnswerNanos = curTime
+                    correctAnswersDeltaSum += delta
+                    meanDelta = (delta / numCorrect) / 1_000_000_000f
                 } else {
                     numMistakes++;
                 }
