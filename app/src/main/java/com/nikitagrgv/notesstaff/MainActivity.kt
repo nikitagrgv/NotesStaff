@@ -158,7 +158,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
         }
 
         Accordion(opened = settingsOpened) {
-            Column(modifier = modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxSize()) {
                 RangeControlRow(
                     label = "Upper Notes",
                     value = numNotesToGenUp,
@@ -172,7 +172,6 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
                     max = 8,
                     onValueChange = { numNotesToGenDown = it })
                 CheckBoxText(
-                    modifier = modifier,
                     text = "Show Notes",
                     checked = isShowNotes,
                     onCheckedChange = { checked ->
@@ -184,11 +183,10 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
 }
 
 @Composable
-fun CheckBoxText(
-    modifier: Modifier, text: String, checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?
+fun CheckBoxText(text: String, checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+        modifier=Modifier.height(40.dp), verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(checked = checked, onCheckedChange = onCheckedChange)
         Text(text = text)
