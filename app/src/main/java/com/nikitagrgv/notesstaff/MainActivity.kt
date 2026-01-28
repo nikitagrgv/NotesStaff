@@ -86,7 +86,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
     Column(modifier = modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(20.dp))
         MusicStaffCanvas(notePositions, renderer)
-        PianoKeyboard { note ->
+        PianoKeyboard(isShowNotes) { note ->
             if (!notePositions.isEmpty()) {
                 val str = mainClefNoteToString(notePositions.first())
                 if (note == str) {
@@ -143,7 +143,7 @@ fun mainClefNoteToString(note: Int): String {
 }
 
 @Composable
-fun PianoKeyboard(onKeyClick: (String) -> Unit) {
+fun PianoKeyboard(isShowNotes: Boolean, onKeyClick: (String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -153,7 +153,7 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
         Row(modifier = Modifier.fillMaxSize()) {
             val whiteKeys = listOf("C", "D", "E", "F", "G", "A", "B")
             whiteKeys.forEach { note ->
-                WhiteKey(note, onClick = { onKeyClick(note) })
+                WhiteKey(note, isShowNotes, onClick = { onKeyClick(note) })
             }
         }
 
@@ -176,7 +176,7 @@ fun PianoKeyboard(onKeyClick: (String) -> Unit) {
 }
 
 @Composable
-fun RowScope.WhiteKey(note: String, onClick: () -> Unit) {
+fun RowScope.WhiteKey(note: String, isShowNotes: Boolean, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .weight(1f)
@@ -186,7 +186,9 @@ fun RowScope.WhiteKey(note: String, onClick: () -> Unit) {
             .clickable { onClick() },
         contentAlignment = Alignment.BottomCenter
     ) {
-        Text(note, color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
+        if (isShowNotes) {
+            Text(note, color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
+        }
     }
 }
 
