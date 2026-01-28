@@ -115,7 +115,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
         Text(
             text = "Correct: $numCorrect",
             textAlign = TextAlign.Center,
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.9f)
@@ -123,7 +123,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
         Text(
             text = "Mistakes: $numMistakes",
             textAlign = TextAlign.Center,
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.9f)
@@ -131,7 +131,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
         Text(
             text = "Mean Delta: ${"%.1f".format(meanDelta)} sec",
             textAlign = TextAlign.Center,
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(0.9f)
@@ -139,7 +139,8 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
         Button(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(8.dp)
+                .padding(4.dp)
+                .height(36.dp)
                 .fillMaxWidth(0.5f), onClick = {
                 notePositions = notePositions.drop(1)
                 addNewNotePosition()
@@ -198,7 +199,7 @@ fun RangeControlRow(label: String, value: Int, min: Int, max: Int, onValueChange
             onValueChange = onValueChange,
             min = min,
             max = max,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).height(36.dp)
         )
     }
 }
@@ -231,7 +232,7 @@ fun PianoKeyboard(isShowNotes: Boolean, onKeyClick: (String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(240.dp)
+            .height(260.dp)
             .padding(10.dp)
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
@@ -290,7 +291,7 @@ fun RowScope.BlackKey(note: String, onClick: () -> Unit) {
 fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer) {
     Canvas(
         modifier = Modifier
-            .height(240.dp)
+            .height(200.dp)
             .fillMaxWidth()
     ) {
         with(renderer) {
@@ -380,7 +381,7 @@ class StaffRenderer(
 }
 
 fun getTestNotes(): List<Int> {
-    return listOf(-6, -5, 10, 12);
+    return listOf(-6, -5, 10, 14);
 }
 
 @Preview(showBackground = true)
@@ -392,6 +393,16 @@ fun ContentPreview() {
 }
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun ContentPreviewBlackSmall() {
+    NotesStaffTheme(darkTheme = true) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Content(notes = getTestNotes())
+        }
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 380, heightDp = 720)
 @Composable
 fun ContentPreviewBlack() {
     NotesStaffTheme(darkTheme = true) {
