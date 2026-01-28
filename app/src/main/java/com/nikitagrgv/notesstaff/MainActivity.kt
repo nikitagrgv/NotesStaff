@@ -171,19 +171,27 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
                     min = -2,
                     max = 8,
                     onValueChange = { numNotesToGenDown = it })
-                Row(
-                    modifier = modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Checkbox(checked = isShowNotes, onCheckedChange = { checked ->
+                CheckBoxText(
+                    modifier = modifier,
+                    text = "Show Notes",
+                    checked = isShowNotes,
+                    onCheckedChange = { checked ->
                         isShowNotes = checked
                     })
-                    Text(
-                        text = "Show Notes"
-                    )
-                }
             }
         }
+    }
+}
+
+@Composable
+fun CheckBoxText(
+    modifier: Modifier, text: String, checked: Boolean, onCheckedChange: ((Boolean) -> Unit)?
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(checked = checked, onCheckedChange = onCheckedChange)
+        Text(text = text)
     }
 }
 
