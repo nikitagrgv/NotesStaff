@@ -84,7 +84,7 @@ fun Content(
     val color = MaterialTheme.colorScheme.onBackground
     val renderer = remember(color) {
         StaffRenderer(color = color).apply {
-            scrollOffset = 500f
+            scrollOffset = 00f
         }
     }
 
@@ -417,7 +417,7 @@ class StaffRenderer(
     }
 
     fun DrawScope.drawNote(index: Int, pos: Int, color: Color) {
-        val xOffset = scrollOffset + 150f + (index * notesSpacing)
+        val xOffset = scrollOffset + 210f + (index * notesSpacing)
         val yOffset = bottomY + (pos * (lineSpacing / 2))
         val height = lineSpacing - 1f
         val width = 50f
@@ -472,7 +472,7 @@ fun getTestNotes(): List<Int> {
 }
 
 fun getTestIsBassClef(): Boolean {
-    return true;
+    return true
 }
 
 @Preview(showBackground = true)
