@@ -142,9 +142,6 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>) {
                 min = -2,
                 max = 8,
                 onValueChange = { numNotesToGenDown = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-
             Row(
                 modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
