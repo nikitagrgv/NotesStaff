@@ -219,7 +219,7 @@ fun ExpandableSettings(
             .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(text = "Practice Settings", style = MaterialTheme.typography.titleMedium)
+            Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
             Text(text = if (expanded) "▲" else "▼")
         }
 
