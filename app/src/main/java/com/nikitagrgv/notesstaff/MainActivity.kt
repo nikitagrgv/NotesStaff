@@ -21,6 +21,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import kotlin.math.max
@@ -106,7 +108,7 @@ fun Content(modifier: Modifier = Modifier, notes: List<Int>, settingsOpened: Boo
             .verticalScroll(scrollState)
     ) {
         Spacer(modifier = Modifier.height(20.dp))
-        MusicStaffCanvas(notePositions, renderer)
+        MusicStaffCanvas(notePositions, renderer, isBassClef = isBassClef)
         PianoKeyboard(isShowNotes) { note ->
             if (!notePositions.isEmpty()) {
                 val str = clefNoteToString(notePositions.first())
@@ -214,11 +216,10 @@ fun Accordion(
             .padding(8.dp)
             .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(12.dp),
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded }
+            .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
@@ -350,14 +351,19 @@ fun RowScope.BlackKey(note: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer) {
+fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer, isBassClef: Boolean) {
+    val textMeasurer = rememberTextMeasurer()
+
     Canvas(
         modifier = Modifier
             .height(200.dp)
             .fillMaxWidth()
     ) {
+        renderer.textMeasurer = textMeasurer
+
         with(renderer) {
             drawStaffLines()
+            drawClef(isBassClef)
             notePositions.forEachIndexed { index, pos ->
                 val noteColor = if (index == 0) Color.Red else color
                 drawNote(index, pos, noteColor)
@@ -374,6 +380,22 @@ class StaffRenderer(
     var color: Color,
 ) {
     var scrollOffset by mutableFloatStateOf(0f)
+    lateinit var textMeasurer: androidx.compose.ui.text.TextMeasurer
+
+    fun DrawScope.drawClef(isBassClef: Boolean) {
+        val clefChar = if (isBassClef) "\uD834\uDD22" else "\uD834\uDD1E"
+        val fontSize = lineSpacing * 4.5f
+        val yOffset = if (isBassClef) -lineSpacing * 0.5f else -lineSpacing * 1.2f
+        val textLayoutResult = textMeasurer.measure(
+            text = clefChar, style = androidx.compose.ui.text.TextStyle(
+                fontSize = fontSize.sp, color = color
+            )
+        )
+        drawText(
+            textLayoutResult = textLayoutResult,
+            topLeft = Offset(horizontalOffset, bottomY + yOffset)
+        )
+    }
 
     fun DrawScope.drawStaffLines() {
         val startX = horizontalOffset
