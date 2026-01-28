@@ -281,7 +281,8 @@ fun MusicStaffCanvas(notePositions: List<Int>, renderer: StaffRenderer) {
         with(renderer) {
             drawStaffLines()
             notePositions.forEachIndexed { index, pos ->
-                drawNote(index, pos)
+                val noteColor = if (index == 0) Color.Green else color
+                drawNote(index, pos, noteColor)
             }
         }
     }
@@ -312,7 +313,7 @@ class StaffRenderer(
         scrollOffset += notesSpacing
     }
 
-    fun DrawScope.drawNote(index: Int, pos: Int) {
+    fun DrawScope.drawNote(index: Int, pos: Int, color: Color) {
         val xOffset = scrollOffset + 150f + (index * notesSpacing)
         val yOffset = bottomY + (pos * (lineSpacing / 2))
         val height = lineSpacing - 1f
