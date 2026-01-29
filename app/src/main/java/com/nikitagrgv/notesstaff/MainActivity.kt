@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
@@ -59,7 +60,10 @@ fun Content(
     var numNotesToGenUp by remember { mutableIntStateOf(4) }
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
+    var isVibrationEnabled by remember { mutableStateOf(true) }
     var isBassClef by remember { mutableStateOf(isBassClef) }
+
+    val context = LocalContext.current
 
     var lastCorrectAnswerNanos by remember { mutableLongStateOf(System.nanoTime()) }
     var correctAnswersDeltaSum by remember { mutableLongStateOf(0) }
@@ -119,7 +123,7 @@ fun Content(
                     notePositions = notePositions.drop(1)
                     addNewNotePosition()
                     renderer.jumpNextNote()
-                    numCorrect++;
+                    numCorrect++
 
                     val curTime = System.nanoTime()
                     val delta = curTime - lastCorrectAnswerNanos
@@ -127,7 +131,8 @@ fun Content(
                     correctAnswersDeltaSum += delta
                     meanDelta = (correctAnswersDeltaSum / numCorrect) / 1_000_000_000f
                 } else {
-                    numMistakes++;
+                    numMistakes++
+                    vibratePhone(context)
                 }
             }
         }
@@ -182,6 +187,10 @@ fun Content(
                     text = "Show Notes", checked = isShowNotes, onCheckedChange = { checked ->
                         isShowNotes = checked
                     })
+                CheckBoxText(
+                    text = "Vibration", checked = isVibrationEnabled, onCheckedChange = { checked ->
+                        isVibrationEnabled = checked
+                    })
                 RangeControlRow(
                     label = "Upper",
                     value = numNotesToGenUp,
@@ -197,6 +206,17 @@ fun Content(
             }
         }
     }
+}
+
+fun vibratePhone(context: android.content.Context) {
+
+    val vibratorManager =
+        context.getSystemService(android.content.Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+    val vibrator = vibratorManager.defaultVibrator
+
+    val effect =
+        android.os.VibrationEffect.createOneShot(300, android.os.VibrationEffect.DEFAULT_AMPLITUDE)
+    vibrator.vibrate(effect)
 }
 
 @Composable
