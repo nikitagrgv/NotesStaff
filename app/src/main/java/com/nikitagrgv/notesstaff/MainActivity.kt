@@ -132,7 +132,9 @@ fun Content(
                     meanDelta = (correctAnswersDeltaSum / numCorrect) / 1_000_000_000f
                 } else {
                     numMistakes++
-                    vibratePhone(context)
+                    if (isVibrationEnabled) {
+                        vibratePhone(context)
+                    }
                 }
             }
         }
@@ -243,11 +245,10 @@ fun Accordion(
             .padding(8.dp)
             .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(12.dp),
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded }
+            .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
