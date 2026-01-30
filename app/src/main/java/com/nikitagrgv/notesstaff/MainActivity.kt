@@ -243,7 +243,7 @@ fun Content(
                     RangeControlRow(
                         label = "Bunch Notes",
                         value = numBunchNotes,
-                        min = 2,
+                        min = 1,
                         max = 8,
                         onValueChange = {
                             numBunchNotes = it
@@ -252,8 +252,8 @@ fun Content(
                     RangeControlRow(
                         label = "Generated For Bunch",
                         value = maxNumGeneratedForBunch,
-                        min = 5,
-                        max = 50,
+                        min = 2,
+                        max = 100,
                         onValueChange = {
                             maxNumGeneratedForBunch = it
                             onBunchConfigChanged()
