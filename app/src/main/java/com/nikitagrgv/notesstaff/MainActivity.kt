@@ -61,6 +61,7 @@ fun Content(
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
     var isVibrationEnabled by remember { mutableStateOf(true) }
+    var isTripletsMode by remember { mutableStateOf(false) }
     var isBassClef by remember { mutableStateOf(isBassClef) }
 
     val context = LocalContext.current
@@ -192,6 +193,10 @@ fun Content(
                 CheckBoxText(
                     text = "Vibration", checked = isVibrationEnabled, onCheckedChange = { checked ->
                         isVibrationEnabled = checked
+                    })
+                CheckBoxText(
+                    text = "Triplets Mode", checked = isTripletsMode, onCheckedChange = { checked ->
+                        isTripletsMode = checked
                     })
                 RangeControlRow(
                     label = "Upper",
