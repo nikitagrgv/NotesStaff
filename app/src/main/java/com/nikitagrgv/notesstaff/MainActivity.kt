@@ -98,6 +98,7 @@ fun Content(
         if (isBunchMode) {
             numGeneratedForBunch++
             if (numGeneratedForBunch > maxNumGeneratedForBunch) {
+                numGeneratedForBunch = 0
                 regenerateBunches()
             }
             if (bunchNotes.size != numBunchNotes) {
