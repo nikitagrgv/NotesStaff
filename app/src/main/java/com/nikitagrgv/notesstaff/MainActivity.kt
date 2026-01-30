@@ -66,7 +66,6 @@ fun Content(
     var isBunchMode by remember { mutableStateOf(false) }
     var bunchNotes by remember { mutableStateOf(listOf<Int>()) }
     var numBunchNotes by remember { mutableIntStateOf(3) }
-
     val context = LocalContext.current
 
     var lastCorrectAnswerNanos by remember { mutableLongStateOf(System.nanoTime()) }
@@ -81,15 +80,17 @@ fun Content(
         return str;
     }
 
-    fun updateBunches() {
-        while (bunchNotes.size < numBunchNotes) {
-            numBunchNotes += (minNotePosition..maxNotePosition).random()
-        }
+    fun regenerateBunches() {
+        bunchNotes = (minNotePosition..maxNotePosition)
+            .shuffled()
+            .take(numBunchNotes)
     }
 
     fun generateNewNote() {
         if (isBunchMode) {
-            updateBunches()
+            if (bunchNotes.size != numBunchNotes) {
+                regenerateBunches()
+            }
             notePositions += bunchNotes.random()
         } else {
             notePositions += (minNotePosition..maxNotePosition).random()
@@ -225,8 +226,7 @@ fun Content(
                         isBunchMode = checked
                         notePositions = listOf()
                     })
-                if (isBunchMode)
-                {
+                if (isBunchMode) {
                     RangeControlRow(
                         label = "Bunches",
                         value = numBunchNotes,
@@ -274,10 +274,11 @@ fun Accordion(
             .padding(8.dp)
             .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
     ) {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .clickable { expanded = !expanded }
-            .padding(12.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = !expanded }
+                .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
