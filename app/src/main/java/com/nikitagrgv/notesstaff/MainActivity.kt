@@ -66,6 +66,9 @@ fun Content(
     var isBunchMode by remember { mutableStateOf(false) }
     var bunchNotes by remember { mutableStateOf(listOf<Int>()) }
     var numBunchNotes by remember { mutableIntStateOf(3) }
+    var maxNumGeneratedForBunch by remember { mutableIntStateOf(20) }
+    var numGeneratedForBunch by remember { mutableIntStateOf(0) }
+
     val context = LocalContext.current
 
     var lastCorrectAnswerNanos by remember { mutableLongStateOf(System.nanoTime()) }
@@ -88,6 +91,10 @@ fun Content(
 
     fun generateNewNote() {
         if (isBunchMode) {
+            numGeneratedForBunch++
+            if (numGeneratedForBunch > maxNumGeneratedForBunch) {
+                regenerateBunches()
+            }
             if (bunchNotes.size != numBunchNotes) {
                 regenerateBunches()
             }
@@ -224,15 +231,23 @@ fun Content(
                 CheckBoxText(
                     text = "Bunch Mode", checked = isBunchMode, onCheckedChange = { checked ->
                         isBunchMode = checked
+                        numGeneratedForBunch = 0
+                        bunchNotes = listOf()
                         notePositions = listOf()
                     })
                 if (isBunchMode) {
                     RangeControlRow(
-                        label = "Bunches",
+                        label = "Bunch Notes",
                         value = numBunchNotes,
                         min = 2,
                         max = 8,
                         onValueChange = { numBunchNotes = it })
+                    RangeControlRow(
+                        label = "Generated For Bunch",
+                        value = maxNumGeneratedForBunch,
+                        min = 5,
+                        max = 50,
+                        onValueChange = { maxNumGeneratedForBunch = it })
                 }
             }
         }
