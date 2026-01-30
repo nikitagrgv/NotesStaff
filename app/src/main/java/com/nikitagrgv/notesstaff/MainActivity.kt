@@ -82,6 +82,10 @@ fun Content(
         if (isTripletsMode) {
             notePositions += (minNotePosition..maxNotePosition).random()
         }
+        else
+        {
+            notePositions += (minNotePosition..maxNotePosition).random()
+        }
     }
 
     while (notePositions.count() < 8) {
