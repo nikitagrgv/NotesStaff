@@ -78,12 +78,12 @@ fun Content(
         return str;
     }
 
-    fun addNewNotePosition() {
+    fun generateNewNote() {
         notePositions += (minNotePosition..maxNotePosition).random()
     }
 
     while (notePositions.count() < 8) {
-        addNewNotePosition()
+        generateNewNote()
     }
 
     val color = MaterialTheme.colorScheme.onBackground
@@ -122,7 +122,7 @@ fun Content(
                 val str = clefNoteToString(notePositions.first())
                 if (note == str) {
                     notePositions = notePositions.drop(1)
-                    addNewNotePosition()
+                    generateNewNote()
                     renderer.jumpNextNote()
                     numCorrect++
 
@@ -170,7 +170,7 @@ fun Content(
                 .height(36.dp)
                 .fillMaxWidth(0.5f), onClick = {
                 notePositions = notePositions.drop(1)
-                addNewNotePosition()
+                generateNewNote()
                 renderer.jumpNextNote()
             }) {
             Text(text = "Skip")
