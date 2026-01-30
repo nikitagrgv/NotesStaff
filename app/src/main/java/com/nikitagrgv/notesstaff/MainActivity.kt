@@ -61,8 +61,11 @@ fun Content(
     var numNotesToGenDown by remember { mutableIntStateOf(4) }
     var isShowNotes by remember { mutableStateOf(false) }
     var isVibrationEnabled by remember { mutableStateOf(true) }
-    var isTripletsMode by remember { mutableStateOf(false) }
     var isBassClef by remember { mutableStateOf(isBassClef) }
+
+    var isBunchMode by remember { mutableStateOf(false) }
+    var bunchNotes by remember { mutableStateOf(listOf<Int>()) }
+    var numBunchNotes by remember { mutableIntStateOf(3) }
 
     val context = LocalContext.current
 
@@ -78,9 +81,16 @@ fun Content(
         return str;
     }
 
+    fun updateBunches() {
+        while (bunchNotes.size < numBunchNotes) {
+            numBunchNotes += (minNotePosition..maxNotePosition).random()
+        }
+    }
+
     fun generateNewNote() {
-        if (isTripletsMode) {
-            notePositions += (minNotePosition..maxNotePosition).random()
+        if (isBunchMode) {
+            updateBunches()
+            notePositions += bunchNotes.random()
         } else {
             notePositions += (minNotePosition..maxNotePosition).random()
         }
@@ -198,11 +208,6 @@ fun Content(
                     text = "Vibration", checked = isVibrationEnabled, onCheckedChange = { checked ->
                         isVibrationEnabled = checked
                     })
-                CheckBoxText(
-                    text = "Triplets Mode", checked = isTripletsMode, onCheckedChange = { checked ->
-                        isTripletsMode = checked
-                        notePositions = listOf()
-                    })
                 RangeControlRow(
                     label = "Upper",
                     value = numNotesToGenUp,
@@ -215,6 +220,20 @@ fun Content(
                     min = -2,
                     max = 8,
                     onValueChange = { numNotesToGenDown = it })
+                CheckBoxText(
+                    text = "Bunch Mode", checked = isBunchMode, onCheckedChange = { checked ->
+                        isBunchMode = checked
+                        notePositions = listOf()
+                    })
+                if (isBunchMode)
+                {
+                    RangeControlRow(
+                        label = "Bunches",
+                        value = numBunchNotes,
+                        min = 2,
+                        max = 8,
+                        onValueChange = { numBunchNotes = it })
+                }
             }
         }
     }
