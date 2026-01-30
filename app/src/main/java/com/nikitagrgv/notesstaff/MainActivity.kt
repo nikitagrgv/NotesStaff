@@ -253,7 +253,7 @@ fun Content(
                         label = "Generated For Bunch",
                         value = maxNumGeneratedForBunch,
                         min = 2,
-                        max = 100,
+                        max = 50,
                         onValueChange = {
                             maxNumGeneratedForBunch = it
                             onBunchConfigChanged()
