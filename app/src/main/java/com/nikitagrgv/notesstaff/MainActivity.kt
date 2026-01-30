@@ -79,7 +79,9 @@ fun Content(
     }
 
     fun generateNewNote() {
-        notePositions += (minNotePosition..maxNotePosition).random()
+        if (isTripletsMode) {
+            notePositions += (minNotePosition..maxNotePosition).random()
+        }
     }
 
     while (notePositions.count() < 8) {
@@ -197,6 +199,7 @@ fun Content(
                 CheckBoxText(
                     text = "Triplets Mode", checked = isTripletsMode, onCheckedChange = { checked ->
                         isTripletsMode = checked
+                        notePositions = listOf()
                     })
                 RangeControlRow(
                     label = "Upper",
