@@ -81,9 +81,7 @@ fun Content(
     fun generateNewNote() {
         if (isTripletsMode) {
             notePositions += (minNotePosition..maxNotePosition).random()
-        }
-        else
-        {
+        } else {
             notePositions += (minNotePosition..maxNotePosition).random()
         }
     }
