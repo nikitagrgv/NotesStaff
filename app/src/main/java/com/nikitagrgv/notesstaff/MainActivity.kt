@@ -84,9 +84,14 @@ fun Content(
     }
 
     fun regenerateBunches() {
-        bunchNotes = (minNotePosition..maxNotePosition)
-            .shuffled()
-            .take(numBunchNotes)
+        bunchNotes = (minNotePosition..maxNotePosition).shuffled().take(numBunchNotes)
+    }
+
+    fun onBunchConfigChanged() {
+        numGeneratedForBunch = 0
+        bunchNotes = listOf()
+        notePositions = listOf()
+        regenerateBunches()
     }
 
     fun generateNewNote() {
@@ -231,9 +236,7 @@ fun Content(
                 CheckBoxText(
                     text = "Bunch Mode", checked = isBunchMode, onCheckedChange = { checked ->
                         isBunchMode = checked
-                        numGeneratedForBunch = 0
-                        bunchNotes = listOf()
-                        notePositions = listOf()
+                        onBunchConfigChanged()
                     })
                 if (isBunchMode) {
                     RangeControlRow(
@@ -241,13 +244,19 @@ fun Content(
                         value = numBunchNotes,
                         min = 2,
                         max = 8,
-                        onValueChange = { numBunchNotes = it })
+                        onValueChange = {
+                            numBunchNotes = it
+                            onBunchConfigChanged()
+                        })
                     RangeControlRow(
                         label = "Generated For Bunch",
                         value = maxNumGeneratedForBunch,
                         min = 5,
                         max = 50,
-                        onValueChange = { maxNumGeneratedForBunch = it })
+                        onValueChange = {
+                            maxNumGeneratedForBunch = it
+                            onBunchConfigChanged()
+                        })
                 }
             }
         }
@@ -289,11 +298,10 @@ fun Accordion(
             .padding(8.dp)
             .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(12.dp),
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded }
+            .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Settings", style = MaterialTheme.typography.titleMedium)
